@@ -1,0 +1,11 @@
+/*css*/
+input{
+    margin: 10px 5px;
+}
+.logo{
+    width: 100px;
+}
+fieldset{
+    width: 19%;
+    text-align: center;
+}
