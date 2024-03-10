@@ -9,19 +9,21 @@
     <br>
     <fieldset>
         <legend>Plato típico de la estación:</legend>
-    
-    <br>
-    <label for="primavera">Primavera</label>
-    <input type="radio" name="estacion" value="primavera" id="primavera">
+        <br>
+        <label for="atemporal">Todo el año</label>
+        <input type="radio" name="estacion" value="atemporal" id="atemporal">
 
-    <label for="verano">Verano</label>
-    <input type="radio" name="estacion" value="verano" id="verano">
+        <label for="primavera">Primavera</label>
+        <input type="radio" name="estacion" value="primavera" id="primavera">
 
-    <label for="otonyo">Otoño</label>
-    <input type="radio" name="estacion" value="otonyo" id="otonyo">
+        <label for="verano">Verano</label>
+        <input type="radio" name="estacion" value="verano" id="verano">
 
-    <label for="invierno">Invierno</label>
-    <input type="radio" name="estacion" value="invierno" id="invierno">
+        <label for="otonyo">Otoño</label>
+        <input type="radio" name="estacion" value="otonyo" id="otonyo">
+
+        <label for="invierno">Invierno</label>
+        <input type="radio" name="estacion" value="invierno" id="invierno">
     </fieldset>
     <br>
     <label for="imagen"></label>
