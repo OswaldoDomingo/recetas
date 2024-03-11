@@ -2,12 +2,13 @@
 // controlador_receta
 if(isset($_POST['enviar'])){
     //recoger nombre de la receta
-    $nombreReceta = $_POST['nombreReceta'];
+    $nombreReceta = eliminaEspacios('nombreReceta');
     //recoge receta
     //Conservo los saltos de línea nl2br
-    $descripcion = nl2br($_POST['descripcion']);
-    //recoge estación de receta
-    $estacion = $_POST['estacion'];
+    $descripcion =eliminaEtiquetas('descripcion');
+    //recoge estación de receta se comprueba en un array si está la estación
+    // $estacion = $_POST['estacion'];
+    $estacion = estacion('estacion');
     //El archivo de imagen, solo recojo el nombre de la imagen
     $imagen = $_FILES['imagen'];
     $nombreImagen = $imagen['name'];
@@ -17,6 +18,40 @@ if(isset($_POST['enviar'])){
     echo "Ingredientes y cómo se elabora:<br> " . $descripcion . "<br>\n";
     echo "Nombre del fichero de la imagen: " . $nombreImagen . "<br>\n";
     echo "Imagen: <br><img = src= 'imagenes/" . $nombreImagen . "' <br>\n";
+}
+
+//Eliminar etiquetas de el textarea
+function eliminaEtiquetas($texto){
+    if(isset($_REQUEST[$texto])){
+        $resultado = nl2br(strip_tags($_REQUEST[$texto]));
+    } else{
+        $resultado = "";
+    }
+    return $resultado;
+}
+//Elimina espacios delante y final del texto
+function eliminaEspacios($variable){
+    if(isset($_REQUEST[$variable])){
+        $resultado = trim($_REQUEST[$variable]);
+    } else{
+        $resultado = "";
+    }
+    return $resultado;
+}
+
+//Saber si se encuentra en el array la estación del año
+function estacion($variableEstacion){
+    $listaEstaciones = ['primavera', 'verano', 'otonyo', 'invierno', 'atemporal'];
+    $resultado ="";
+    if(isset($_REQUEST[$variableEstacion])){
+        $valorEstacion = $_REQUEST[$variableEstacion];
+        if(in_array($valorEstacion, $listaEstaciones)){
+            $resultado = $_REQUEST[$variableEstacion];
+        } else {
+            $resultado = "No pasó la prueba ->" . $variableEstacion;
+        }
+    }
+    return $resultado;
 }
 
 
