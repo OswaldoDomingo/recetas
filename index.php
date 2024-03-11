@@ -11,8 +11,8 @@
     <h1>RECETARIO</h1>
     <img class="logo" src="imagenes/recetas2.png" alt="">
     <?php
-        require_once 'vista/formulario_receta.php';
         require_once 'controlador/controlador_receta.php';
+        require_once 'vista/formulario_receta.php';
         
     ?>
 </body>

@@ -2,6 +2,11 @@
 <form enctype="multipart/form-data" method="post">
     <label for="nombreReceta">Nombre</label>
     <input type="text" name="nombreReceta" id="nombreReceta">
+    <?php 
+        if(count($errores)>0){
+            echo $errores['nombreReceta'];
+        }
+    ?>
     <br>
     <label for="descripcion">Descripción</label>
     <br>
