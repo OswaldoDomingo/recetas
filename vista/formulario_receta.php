@@ -1,6 +1,12 @@
 <!-- formulario_receta -->
 <form enctype="multipart/form-data" method="post">
-    <label for="nombreReceta">Nombre</label>
+    <label for="usuario">Usuario:</label>
+    <input type="text" name="usuario" id="usuario">
+    <br>
+    <label for="telefono">Teléfono:</label>
+    <input type="text" name="telefono" id="telefono">
+    <br>
+    <label for="nombreReceta">Nombre de la receta:</label>
     <input type="text" name="nombreReceta" id="nombreReceta">
     <?php 
         if(count($errores)>0){
