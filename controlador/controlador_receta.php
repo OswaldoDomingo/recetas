@@ -1,4 +1,5 @@
 <?php
+require_once 'bGeneral.php';
 // controlador_receta
 //Errores
 $errores = [];
@@ -33,6 +34,8 @@ if(isset($_POST['enviar'])){
     } else {
         echo "Hubo un error al subir la imagen.";
     }
+} else {
+    echo "No me lo has enviado desde el formulario";
 }
 
 //Eliminar etiquetas de el textarea
