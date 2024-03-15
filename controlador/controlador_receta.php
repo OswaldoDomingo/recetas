@@ -188,11 +188,13 @@ function addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, 
             "estacion" => $estacion,
             "imagen" => $imagen
         ];
-        // Convertir el array a formato JSON
+        // Convertir el array a formato JSON conservando caracteres como ñ y acentos
         $jsonReceta = json_encode($receta, JSON_UNESCAPED_UNICODE);
         
         if ($nombreReceta != "vacio") {
+            //Se escribe la línea en el archivo
             fwrite($recetario, $jsonReceta);
+            //si ha quedadoi algo en el buffer se escribe en la línea
             fflush($recetario);
         } else {
             $errores['nombreReceta'] = "No se puso el nombre al campo";
