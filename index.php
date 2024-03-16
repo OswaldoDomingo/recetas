@@ -13,7 +13,7 @@
     <?php
         require_once 'controlador/controlador_receta.php';
         require_once 'vista/formulario_receta.php';
-        addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, $nombreImagen, $errores[]);
+        //addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, $nombreImagen, $errores[]);
         leerRecetario();
     ?>
 </body>

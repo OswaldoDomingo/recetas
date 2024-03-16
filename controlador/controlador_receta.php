@@ -34,6 +34,8 @@ if (isset($_POST['enviar'])) {
     } else {
         echo "Hubo un error al subir la imagen.";
     }
+    //Se añade la receta al archivo de texto
+    addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, $nombreImagen, $errores[]);
 } else {
     echo "No me lo has enviado desde el formulario";
 }
@@ -81,53 +83,7 @@ function estacion($variableEstacion)
     return $resultado;
 }
 
-//Función para subir imágenes
-function subirImagen($inputNombre)
-{
-    //Verificar si se ha subido el archivo
-    if (empty($_FILES[$inputNombre]['name'])) {
-        echo "No se ha seleccionado ningún archivo";
-        return false;
-    }
 
-    //Directorio donde se van a guardar las imágenes
-    // $directorio = "imagenes/"; 
-    //Esta forma de arriba también sirve
-    //Hay que poner al final la / ó \\ para que se sepa que es un directorio
-    $directorio = "C:\\servidor\\apache24\\htdocs\\recetas\\imagenes\\";
-    //extensiones permitidas
-    $extensionesPermitidas = array('jpg', 'png');
-    //Tamaño máximo 25KB
-    $tamanoMaximo = 25000;
-
-    //Recoger el FILE del input
-    $imagen = $_FILES[$inputNombre];
-    $nombreImagen = $imagen['name'];
-    $tamanoImagen = $imagen['size'];
-    $tempImagen = $imagen['tmp_name'];
-
-    //Obtener la extensión del archivo
-    $extension = pathinfo($nombreImagen, PATHINFO_EXTENSION);
-
-    //Generar un nombre único al rchivo
-    $nombreArchivo = uniqid() . '.' . $extension;
-
-    //Ruta completa para subir el archivo
-    $rutaArchivo = $directorio . $nombreArchivo;
-
-    //Verificar si el archivo es una imagen con las extensiones que queremos
-    // y si el tamaño es válido
-    if (in_array($extension, $extensionesPermitidas) && $tamanoImagen <= $tamanoMaximo) {
-        //Intentar subir el fichero
-        if (move_uploaded_file($tempImagen, $rutaArchivo)) {
-            return true;
-        } else {
-            return false;
-        }
-    } else {
-        return false;
-    }
-}
 //funcion para que
 function crearVariable($str)
 {
@@ -189,13 +145,14 @@ function addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, 
             "imagen" => $imagen
         ];
         // Convertir el array a formato JSON conservando caracteres como ñ y acentos
-        $jsonReceta = json_encode($receta, JSON_UNESCAPED_UNICODE);
+        $jsonReceta = json_encode($receta, JSON_UNESCAPED_UNICODE) . PHP_EOL;
         
         if ($nombreReceta != "vacio") {
             //Se escribe la línea en el archivo
             fwrite($recetario, $jsonReceta);
             //si ha quedadoi algo en el buffer se escribe en la línea
             fflush($recetario);
+            subirImagen('imagen');
         } else {
             $errores['nombreReceta'] = "No se puso el nombre al campo";
         }
@@ -234,4 +191,53 @@ function leerRecetario()
         }
     }
     fclose($recetario);
+}
+
+//Función para subir imágenes
+function subirImagen($inputNombre)
+{
+    //Verificar si se ha subido el archivo
+    if (empty($_FILES[$inputNombre]['name'])) {
+        echo "No se ha seleccionado ningún archivo";
+        return false;
+    }
+
+    //Directorio donde se van a guardar las imágenes
+    // $directorio = "imagenes/"; 
+    //Esta forma de arriba también sirve
+    //Hay que poner al final la / ó \\ para que se sepa que es un directorio
+    $directorio = "C:\\servidor\\apache24\\htdocs\\recetas\\imagenes\\";
+    //extensiones permitidas
+    $extensionesPermitidas = array('jpg', 'png');
+    //Tamaño máximo 40KB
+    $tamanoMaximo = 40000;
+
+    //Recoger el FILE del input
+    $imagen = $_FILES[$inputNombre];
+    $nombreImagen = $imagen['name'];
+    $tamanoImagen = $imagen['size'];
+    $tempImagen = $imagen['tmp_name'];
+
+    //Obtener la extensión del archivo
+    $extension = pathinfo($nombreImagen, PATHINFO_EXTENSION);
+    $soloNombre = pathinfo($nombreImagen, PATHINFO_FILENAME);
+
+    //Generar un nombre único al rchivo
+    $nombreArchivo = $soloNombre . '_imagen_' . uniqid() . '.' . $extension;
+
+    //Ruta completa para subir el archivo
+    $rutaArchivo = $directorio . $nombreArchivo;
+
+    //Verificar si el archivo es una imagen con las extensiones que queremos
+    // y si el tamaño es válido
+    if (in_array($extension, $extensionesPermitidas) && $tamanoImagen <= $tamanoMaximo) {
+        //Intentar subir el fichero
+        if (move_uploaded_file($tempImagen, $rutaArchivo)) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
