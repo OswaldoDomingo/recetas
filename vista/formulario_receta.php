@@ -8,11 +8,6 @@
     <br>
     <label for="nombreReceta">Nombre de la receta:</label>
     <input type="text" name="nombreReceta" id="nombreReceta">
-    <?php 
-        if(count($errores)>0){
-            echo $errores['nombreReceta'];
-        }
-    ?>
     <br>
     <label for="descripcion">Descripción</label>
     <br>

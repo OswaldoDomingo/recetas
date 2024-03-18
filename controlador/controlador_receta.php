@@ -145,7 +145,7 @@ function addReceta($nombreReceta, $usuario, $telefono, $descripcion, $estacion, 
             "imagen" => $imagen
         ];
         // Convertir el array a formato JSON conservando caracteres como ñ y acentos
-        $jsonReceta = json_encode($receta, JSON_UNESCAPED_UNICODE) . PHP_EOL;
+        $jsonReceta = PHP_EOL . json_encode($receta, JSON_UNESCAPED_UNICODE) ;
         
         if ($nombreReceta != "vacio") {
             //Se escribe la línea en el archivo
@@ -194,7 +194,7 @@ function leerRecetario()
 }
 
 //Función para subir imágenes
-function subirImagen($inputNombre)
+function subirImagen($inputNombre):bool
 {
     //Verificar si se ha subido el archivo
     if (empty($_FILES[$inputNombre]['name'])) {
